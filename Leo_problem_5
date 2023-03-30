@@ -1,0 +1,23 @@
+import matplotlib.pyplot as plt
+import numpy as np
+from math import cos,sin,pi
+import scipy.optimize as opt
+
+
+k, L = 1, 1
+def func5(theta,k,L):
+    coeff = (-2/cos(theta)) + (5/sin(theta))
+    return k * theta * coeff / L
+theta = np.arange(-pi/3,pi/3,pi/100)
+# theta = np.arange(-3,-2,pi/100)
+F = np.zeros_like(theta)
+for i in range(len(theta)):
+    F[i] = func5(theta[i],k,L)
+plt.plot(theta,F)
+plt.xlabel('theta')
+plt.ylabel('F')
+plt.title('Bifurcation diagram')
+vertF = np.arange(0,8,0.01) 
+vertTheta = np.zeros_like(vertF) 
+plt.plot(vertTheta,vertF,'r--')
+plt.show()
