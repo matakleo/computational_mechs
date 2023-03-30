@@ -47,6 +47,7 @@ displacement_range=np.arange(initial_displacement,right_boundary,force_increment
 Leo_fixed_point(myfunc,initial_displacement,force_increment_step,)
 
 print(plot_exact_solution(2.6))
+
 plt.plot(plot_exact_solution(2.6))
 plt.show()
 # d=Leo_fixed_point(func,[d0],0.1,)

@@ -1,47 +1,55 @@
+import matplotlib as mpl
 import numpy as np
 import matplotlib.pyplot as plt
+def fixed_point(f, x0, tolerance):
+    while True:
+        x = f(x)
+        if abs(x - x0) < tolerance:
+            return x
 
-# Define the function N(d) and its derivative N'(d)
-def N(d):
-    return 0.2*d*3 - 2.1*d*2 + 6*d
+def f(x):
+# Define the nonlinear equation
+    return 0.2*x**3 - 2.1*x**2 + 6*x
 
-def N_prime(d):
-    return 0.6*d**2 - 4.2*d + 6
+def main():
+    
 
-# Define the tolerance and maximum number of iterations
-tol = 1e-8
-max_iter = 1000
+    # Define the initial guess
+    x0 = 0
 
-# Define the load control parameters
-delta_F = 0.1
-d_range = np.arange(0, 2.6, delta_F)
+    # Define the tolerance
+    tolerance = 1e-6
 
-# Define the initial displacement and force
-d0 = 0
-F0 = N(d0)
+    # Solve the equation
+    x = fixed_point(f, x0, tolerance)
 
-# Initialize the arrays to store the results
-d = [d0]
-F = [F0]
+    # Define the load increment
+    delF = 0.2
 
-# Use the Newton-Raphson method to obtain the force-displacement curve
-for i in range(len(d_range)-1):
-    F_target = N(d_range[i+1])
-    d_curr = d[-1]
-    F_curr = F[-1]
-    iter_count = 0
-    while abs(F_target - F_curr) > tol and iter_count < max_iter:
-        d_next = d_curr - (F_curr - F_target)/N_prime(d_curr)
-        F_next = N(d_next)
-        d_curr = d_next
-        F_curr = F_next
-        iter_count += 1
-    d.append(d_curr)
-    F.append(F_curr)
+    # Define the load-displacement curve
+    load = []
+    displacement = []
 
-# Plot the force-displacement curve
-plt.plot(d, F, '-o')
-plt.xlabel('Displacement (mm)')
-plt.ylabel('Force (kN)')
-plt.title('Force-Displacement Curve (Newton-Raphson Method)')
-plt.show()
+    # Iterate through the displacement values
+    for d in np.arange(0, 8):
+        # Calculate the load
+        load.append(delF * x)
+
+        # Calculate the displacement
+        displacement.append(d)
+
+        # Update the guess
+        x = f(x)
+
+    # Plot the load-displacement curve
+    plt.plot(displacement, load)
+
+    # Add labels to the plot
+    plt.xlabel("Displacement")
+    plt.ylabel("Load")
+
+    # Show the plot
+    plt.show()
+
+if __name__ == "__main__":
+    main()

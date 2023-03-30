@@ -10,17 +10,20 @@ def fixed_point_iteration(g, x0, tol=1e-8, max_iter=100):
     x = x0
     for i in range(max_iter):
         x_new = g(x)
+        print(x)
         if abs(x_new - x) < tol:
             return x_new, i+1
         x = x_new
     return x, max_iter
 
 # define the function for the fixed point iteration
+# def g(x):
+#     return x + 0.05*(N(x)/100)
 def g(x):
     return x + 0.05*(N(x)/100)
 
 # set the range of displacements
-d = np.linspace(0, 8.1, 10)
+d = np.arange(0, 8, 0.5)
 
 # use the fixed point iteration to solve for the displacement at each point in the range
 x = np.zeros_like(d)
