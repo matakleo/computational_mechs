@@ -1,13 +1,14 @@
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+from math import *
 
 def N(x):
-    return 0.2*x**3-2.1*x**2+6*x
+    return np.array(0.2*x**3-2.1*x**2+6*x)
 
 
 def Nprime(x):
-    return 0.6*x**2 - 4.2*x + 6
+    return np.array(0.6*x**2 - 4.2*x + 6)
 
 
 def plot_exact_sol(boolean):
@@ -25,14 +26,25 @@ def plot_exact_sol(boolean):
 
 
 # define the fixed point iteration function
-def fixed_point_iteration(g, x0, tol=1e-8, max_iter=100):
+def Leos_fixed_point(g, x0, tol=1e-8, max_iter=100):
+    """
+    The function to solve a system of nonlinear equations using 
+    fixed point method withing a given tolerance.
+
+    >>> print(Leos_fixed_point(lambda x: np.array([0.5 * (x[0]**2 + 1.0)]),[0],0.001))
+    (array([0.95708033]), 41, ('converged in', 41, 'iters.'))
+    """
+
+
+    #initialize x
     x = x0
     status='not converged'
+    #loop over the max iter number, exit if sol found!
     for i in range(max_iter):
         x_new = g(x)
         # print(x,i)
         if abs(x_new - x) < tol:
-            status=('converged in',i,'iters.')
+            status=('converged in',i+1,'iters.')
             return x_new, i+1,status
         x = x_new
     return x, max_iter, status    
@@ -41,7 +53,21 @@ def fixed_point_iteration(g, x0, tol=1e-8, max_iter=100):
 
 
 
-def newton_raphson(func,dfunc,x0, tol=1e-8, max_iter=100):
+def Leos_Newton_Raphson(func,dfunc,x0, tol=1e-8, max_iter=100):
+    """
+    The function to solve a system of nonlinear equations using 
+    Newton-Raphson method withing a given tolerance. Required both Function and it's derivative!
+
+    def funcxsq(x):
+        return x**2
+    def func2x(x):
+        return 2*x
+
+    >>> print(Leos_Newton_Raphson(funcxsq,func2x,0.1,0.001))
+    (0.0007812499999999999, 7, 'converged!')
+
+    
+    """
     x = x0
     status='not converged.'
     for i in range(max_iter):
@@ -73,3 +99,9 @@ def modified_newton_raphson(func,dfunc,x0, tol=1e-8, max_iter=100):
 
     return x, max_iter, status  
 
+def funcxsq(x):
+    return x**2
+def func2x(x):
+    return 2*x
+
+print(modified_newton_raphson(funcxsq,func2x,0.1,0.001))
