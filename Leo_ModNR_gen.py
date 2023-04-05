@@ -1,15 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from across_files_funcs import modified_newton_raphson,plot_exact_sol,Nprime
-
-def N(x):
-    return np.array(0.2*x**3-2.1*x**2+6*x)
-
-
-def Nprime(x):
-    return np.array(0.6*x**2 - 4.2*x + 6)
-
-
 def plot_exact_sol(boolean):
     if boolean:
         lst_to_plot=[]
@@ -22,6 +13,16 @@ def plot_exact_sol(boolean):
            label = '2.5 point') 
 
     return
+    
+def N(x):
+    return np.array(0.2*x**3-2.1*x**2+6*x)
+
+
+def Nprime(x):
+    return np.array(0.6*x**2 - 4.2*x + 6)
+
+
+
 
 
 def Leos_modified_newton_raphson(func,dfunc,x0, tol=1e-8, max_iter=100):

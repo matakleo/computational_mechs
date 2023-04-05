@@ -84,7 +84,22 @@ def Leos_Newton_Raphson(func,dfunc,x0, tol=1e-8, max_iter=100):
 # Test the function with an initial guess of x = 1
 
 
-def modified_newton_raphson(func,dfunc,x0, tol=1e-8, max_iter=100):
+def Leos_modified_newton_raphson(func,dfunc,x0, tol=1e-8, max_iter=100):
+
+    """
+    The function to solve a system of nonlinear equations using 
+    initial tangent Newton-Raphson method withing a given tolerance. Requires both Function and it's derivative!
+
+    def funcxsq(x):
+        return x**2
+    def func2x(x):
+        return 2*x
+
+    >>> print(Leos_modified_newton_raphson(funcxsq,func2x,0.1,0.001))
+    (0.012925493446806331, 11, 'converged!')
+
+    
+    """
     x = x0
     df = dfunc(x)
     status='not converged.'
@@ -104,4 +119,3 @@ def funcxsq(x):
 def func2x(x):
     return 2*x
 
-print(modified_newton_raphson(funcxsq,func2x,0.1,0.001))

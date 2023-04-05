@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from math import cos,sin,pi
-import scipy.optimize as opt
+
 
 
 k, L = 1, 1

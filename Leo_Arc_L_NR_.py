@@ -1,25 +1,33 @@
-import numpy as np
 import matplotlib.pyplot as plt
-from across_files_funcs import newton_raphson,plot_exact_sol,Nprime
+import numpy as np
+from numpy import linalg as LA
+import scipy.optimize as opt
 
+# Define function
+def f(x):
+    return 0.2*x**3 - 2.1*x**2 + 6*x
 
-# Define the initial values of d and lambda
-d0 = 0
-Forcing=np.arange(0,10,0.2)
-def dN(d):
-    return 0.6*d**2-4.2*d+6
+F_ext=14
+tol=0.001
+r=0.5
+n_total=85
 
-for df in Forcing:
+x_initial=[0,0]
+
+results = [x_initial]
+
+for i in range (n_total):
+    print(x_initial)    
+    def eq_system(x):
+        return f(x[0])-x[1]*14, (x[1]-x_initial[1])**2+(x[0]-x_initial[0])**2- 0.01
     
-    def g(d):
-        ##convert N(d)-F=0 to fixed point function
-        return 0.2*d**3-2.1*d**2+6*d-df
+    def jacob_eq(x):
+        return [[0.6*x[0]**2 - 4.2*x[0] + 6,-14],[2*(x[0]-x_initial[0]),2*(x[1]-x_initial[1])]]
+    
+    results.append(opt.fsolve(eq_system,np.array(x_initial)+0.1,fprime=jacob_eq))
+    
+    x_initial = results[i+1]
+    
 
-    d,num_of_iters,status = newton_raphson(g,Nprime,0.5)
-    print(d,df)
-    if df<5.5:
-        plt.scatter(d,df,color='r')
-
-plot_exact_sol(True)
-plt.legend()
+    plt.scatter(results[i][0],results[i][1]*F_ext)
 plt.show()
