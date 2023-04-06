@@ -56,7 +56,7 @@ for df in Forcing:
         return df/(0.2*d**2-2.1*d+6)
 
     d,num_of_iters,status = Leos_fixed_point(g, d0,)
-    print('force ='+str(df),'displacement = '+str(d),num_of_iters,status)
+    print('force = {:.2f}'.format(df),'displacement = {:.2f}'.format(d),num_of_iters,status)
   
     plt.scatter(d,df,color='r')
 

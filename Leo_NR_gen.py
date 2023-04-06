@@ -34,6 +34,8 @@ def Leos_Newton_Raphson(func,dfunc,x0, tol=1e-8, max_iter=100):
     >>> print(Leos_Newton_Raphson(funcxsq,func2x,0.1,0.001))
     (0.0007812499999999999, 7, 'converged!')
 
+    written by Leo M.
+
     
     """
     x = x0
@@ -62,7 +64,7 @@ for df in Forcing:
         return 0.2*d**3-2.1*d**2+6*d-df
 
     d,num_of_iters,status = Leos_Newton_Raphson(g,Nprime,0)
-    print('force ='+str(df),'displacement = '+str(d),num_of_iters,status)
+    print('force ={:.2f}'.format(df),'displacement = {:.2f}'.format(d),num_of_iters,status)
     # print(d,df)
 
     plt.scatter(d,df,color='r')

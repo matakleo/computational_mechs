@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from across_files_funcs import modified_newton_raphson,plot_exact_sol,Nprime
 def plot_exact_sol(boolean):
     if boolean:
         lst_to_plot=[]
@@ -39,7 +38,7 @@ def Leos_modified_newton_raphson(func,dfunc,x0, tol=1e-8, max_iter=100):
     >>> print(Leos_modified_newton_raphson(funcxsq,func2x,0.1,0.001))
     (0.012925493446806331, 11, 'converged!')
 
-    
+    writen by Leo M.    
     """
     x = x0
     df = dfunc(x)
@@ -67,7 +66,7 @@ for df in Forcing:
         return 0.2*d**3-2.1*d**2+6*d-df
 
     d,num_of_iters,status = Leos_modified_newton_raphson(g,Nprime,0.1)
-    print('force ='+str(df),'displacement = '+str(d),num_of_iters,status)
+    print('force ={:.2f}'.format(df),'displacement = {:.2f}'.format(d),num_of_iters,status)
     # if df<5.5:
     plt.scatter(d,df,color='r')
 
